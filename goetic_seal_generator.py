@@ -25,41 +25,44 @@ ax.fill_between(theta, radius_inner, radius_outer, color='white')
 # Pedir al usuario un nombre
 name = input("Ingrese su nombre: ")
 
-# Transformar el nombre a caracteres hebreos
+# Transformar el nombre a caracteres hebreos y obtener los valores numéricos cabalísticos
 name_hebrew = ""
+numerical_values = []
 hebrew_conversion = {
-    'A': 'א',
-    'B': 'ב',
-    'C': 'ג',
-    'D': 'ד',
-    'E': 'ה',
-    'F': 'ו',
-    'G': 'ז',
-    'H': 'ח',
-    'I': 'ט',
-    'J': 'י',
-    'K': 'כ',
-    'L': 'ל',
-    'M': 'מ',
-    'N': 'נ',
-    'O': 'ס',
-    'P': 'ע',
-    'Q': 'פ',
-    'R': 'צ',
-    'S': 'ק',
-    'T': 'ר',
-    'U': 'ש',
-    'V': 'ת',
-    'W': 'ך',
-    'X': 'ם',
-    'Y': 'ן',
-    'Z': 'ף',
+    'A': ('א', 1),
+    'B': ('ב', 2),
+    'C': ('ג', 3),
+    'D': ('ד', 4),
+    'E': ('ה', 5),
+    'F': ('ו', 6),
+    'G': ('ז', 7),
+    'H': ('ח', 8),
+    'I': ('ט', 9),
+    'J': ('י', 10),
+    'K': ('כ', 20),
+    'L': ('ל', 30),
+    'M': ('מ', 40),
+    'N': ('נ', 50),
+    'O': ('ס', 60),
+    'P': ('ע', 70),
+    'Q': ('פ', 80),
+    'R': ('צ', 90),
+    'S': ('ק', 100),
+    'T': ('ר', 200),
+    'U': ('ש', 300),
+    'V': ('ת', 400),
+    'W': ('ך', 500),
+    'X': ('ם', 600),
+    'Y': ('ן', 700),
+    'Z': ('ף', 800),
 }
 
 for char in name:
     char_upper = char.upper()
     if char_upper in hebrew_conversion:
-        name_hebrew += hebrew_conversion[char_upper]
+        hebrew_char, value = hebrew_conversion[char_upper]
+        name_hebrew += hebrew_char
+        numerical_values.append(value)
     else:
         name_hebrew += char
 
@@ -74,28 +77,37 @@ for char, ang in zip(name_hebrew, angle):
 ax.plot(x_outer, y_outer, color='black')
 ax.plot(x_inner, y_inner, color='black')
 
-# Dibujar el octágono dentro del círculo interno
-octagon_points = []
-num_sides = 8
+# Generar una figura aleatoria en el centro del círculo interno
+figure_points = []
+num_sides = len(numerical_values)
 angle_step = 2 * np.pi / num_sides
-for i in range(num_sides):
-    angle = i * angle_step
-    x = circle_center[0] + radius_inner * np.cos(angle)
-    y = circle_center[1] + radius_inner * np.sin(angle)
-    octagon_points.append((x, y))
+random_angles = np.random.rand(num_sides) * 2 * np.pi
+for i, angle in enumerate(random_angles):
+    value = numerical_values[i % len(numerical_values)]
+    max_radius = radius_inner * value / 100
+    if max_radius > radius_inner:
+        max_radius = radius_inner
+    x = circle_center[0] + max_radius * np.cos(angle)
+    y = circle_center[1] + max_radius * np.sin(angle)
+    figure_points.append((x, y))
     ax.plot([x, circle_center[0]], [y, circle_center[1]], color='black')  # Conectar con líneas al centro
 
-# Conectar todas las puntas del octágono con líneas
+# Conectar todas las puntas de la figura aleatoria con líneas
 for i in range(num_sides):
-    x1, y1 = octagon_points[i]
+    x1, y1 = figure_points[i]
     for j in range(i + 1, num_sides):
-        x2, y2 = octagon_points[j]
+        x2, y2 = figure_points[j]
         ax.plot([x1, x2], [y1, y2], color='black')
 
 # Ajustar los límites de los ejes para que el sello sea visible correctamente
 ax.set_xlim(-1.2, 1.2)
 ax.set_ylim(-1.2, 1.2)
 
+# Eliminar los ejes y etiquetas para obtener un diseño limpio
+ax.axis('off')
+
+# Mostrar el sello en la ventana de visualización
+plt.show()
 # Eliminar los ejes y etiquetas para obtener un diseño limpio
 ax.axis('off')
 
