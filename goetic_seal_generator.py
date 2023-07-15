@@ -163,5 +163,8 @@ ax.set_ylim(-1.2, 1.2)
 # Eliminar los ejes y etiquetas para obtener un diseño limpio
 ax.axis('off')
 
+# Guardar la figura como archivo de imagen en formato .jpg
+plt.savefig('sello.jpg', format='jpg')
+
 # Mostrar el sello en la ventana de visualización
 plt.show()
