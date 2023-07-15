@@ -82,6 +82,8 @@ figure_points = []
 num_sides = len(numerical_values)
 angle_step = 2 * np.pi / num_sides
 random_angles = np.random.rand(num_sides) * 2 * np.pi
+polygon_angles = []  # Almacenar los ángulos generados para el polígono
+
 for i, angle in enumerate(random_angles):
     value = numerical_values[i % len(numerical_values)]
     max_radius = radius_inner * value / 100
@@ -90,24 +92,33 @@ for i, angle in enumerate(random_angles):
     x = circle_center[0] + max_radius * np.cos(angle)
     y = circle_center[1] + max_radius * np.sin(angle)
     figure_points.append((x, y))
-    ax.plot([x, circle_center[0]], [y, circle_center[1]], color='black')  # Conectar con líneas al centro
+    ax.plot([x, circle_center[0]], [y, circle_center[1]], color='white')  # Conectar con líneas al centro
+    polygon_angles.append(angle)  # Almacenar el ángulo generado
 
 # Conectar todas las puntas de la figura aleatoria con líneas
 for i in range(num_sides):
     x1, y1 = figure_points[i]
     for j in range(i + 1, num_sides):
         x2, y2 = figure_points[j]
-        ax.plot([x1, x2], [y1, y2], color='black')
+        ax.plot([x1, x2], [y1, y2], color='white')
+
+# Crear el polígono con los ángulos generados
+polygon_points = []
+for angle in polygon_angles:
+    x = circle_center[0] + radius_inner * np.cos(angle)
+    y = circle_center[1] + radius_inner * np.sin(angle)
+    polygon_points.append((x, y))
+
+# Conectar todas las puntas del polígono con líneas
+for i in range(num_sides):
+    x1, y1 = polygon_points[i]
+    x2, y2 = polygon_points[(i + 1) % num_sides]
+    ax.plot([x1, x2], [y1, y2], color='black')
 
 # Ajustar los límites de los ejes para que el sello sea visible correctamente
 ax.set_xlim(-1.2, 1.2)
 ax.set_ylim(-1.2, 1.2)
 
-# Eliminar los ejes y etiquetas para obtener un diseño limpio
-ax.axis('off')
-
-# Mostrar el sello en la ventana de visualización
-plt.show()
 # Eliminar los ejes y etiquetas para obtener un diseño limpio
 ax.axis('off')
 
