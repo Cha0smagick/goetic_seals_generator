@@ -109,7 +109,7 @@ angle = np.linspace(0, 2 * np.pi, len(converted_name), endpoint=False)
 for char, ang in zip(converted_name, angle):
     x = circle_center[0] + (radius_inner + (radius_outer - radius_inner) / 2) * np.cos(ang)
     y = circle_center[1] + (radius_inner + (radius_outer - radius_inner) / 2) * np.sin(ang)
-    ax.text(x, y, char, fontsize=48, ha='center', va='center', rotation=ang * 180 / np.pi + 90)
+    ax.text(x, y, char, fontsize=34, ha='center', va='center', rotation=ang * 180 / np.pi + 90)
 
 # Dibujar las circunferencias exterior e interior
 ax.plot(x_outer, y_outer, color='black')
