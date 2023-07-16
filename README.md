@@ -1,2 +1,4 @@
 # goetic_seals_generator
-put a name and generate your own goetic seal
+# put a name and generate your own goetic seal
+
+"Goetic_Seals_Generator" es una asombrosa aplicación en Python que te permite poner un nombre y generar tu propio sello goético en formato de imagen JPG. Basada en los antiguos grimorios y la tradición de la magia ceremonial, esta herramienta despierta la magia y la misteriosa energía de los sellos goéticos. Simplemente ingresa un nombre y "Goetic_Seals_Generator" utilizará algoritmos especializados para generar un sello personalizado con símbolos y letras cabalísticas. Este sello único encapsulará la esencia y la vibración asociadas con el nombre ingresado, brindándote una herramienta poderosa para explorar la magia y el ocultismo. ¡Sumérgete en el mundo de los sellos goéticos con "Goetic_Seals_Generator" y desata tu potencial místico en busca de conocimiento y poder!
